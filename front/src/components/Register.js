@@ -60,7 +60,7 @@ const Register = () => {
                 </div>
                 <div className='col-10 offset-1 offset-md-0 col-md-4' id='sign'>
                 <form onSubmit={handleSubmit}>
-                    <div className='row pt-5 mt-5'>=
+                    <div className='row pt-5 mt-5'>
                         <h1>Sign Up</h1>
                     </div>
                     <div className='row pt-3 d-flex justify-content-center'>
@@ -93,8 +93,14 @@ const Register = () => {
                             </div>
                         </div>   
                         <div className="mb-3 row">
+                        {/* <select className="form-select" aria-label="Default select example">
+                                <option defaultValue="s">Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select> */}
                             <label className="col-sm-2 col-form-label" htmlFor="Region">Region:</label>
-                            <div className="col-sm-10">
+                            <div className="col-sm-10">                        
                                 <input
                                     type="text"
                                     id="Region"

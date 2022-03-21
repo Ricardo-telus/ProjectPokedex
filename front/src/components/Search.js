@@ -81,9 +81,6 @@ const getPokes= async ()=>{
                                     aria-controls="offcanvasScrolling"
                                     onClick={seeMoves}
                                     >See moves</button> 
-                                        {
-                                          // console.log(element.moves[0].move.name) //" "+element.moves[0].move.name+"+"+element.moves.length
-                                        }
                                     </p>
                                     <button type="button" value={element.id} className="btn btn-primary w-100" onClick={obtainPoke}>Obtain</button>
                                 </div>
