@@ -1,0 +1,32 @@
+#poke{
+
+  background-image: url('../images/pokes.webp');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #999;
+  border-radius: 64px 0px 0px 64px;
+    -moz-border-radius: 64px 0px 0px 64px;
+    -webkit-border-radius: 64px 0px 0px 64px;
+    border: 0px solid #000000;
+    -webkit-box-shadow: -19px 28px 17px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: -19px 28px 17px -6px rgba(0,0,0,0.75);
+    box-shadow: -19px 28px 17px -6px rgba(0,0,0,0.75);
+
+}
+#sign{
+    background-color: aliceblue;
+    border-radius: 64px 0px 0px 64px;
+    border-radius: 0px 64px 64px 0px;
+    -moz-border-radius: 0px 64px 64px 0px;
+    -webkit-border-radius: 0px 64px 64px 0px;
+    border: 0px solid #000000;
+      -webkit-box-shadow: 27px 13px 16px 4px rgba(0,0,0,0.75);
+      -moz-box-shadow: 27px 13px 16px 4px rgba(0,0,0,0.75);
+      box-shadow: 27px 13px 16px 4px rgba(0,0,0,0.75);
+  
+  }
+#log{  
+    height:90vh;    
+}
