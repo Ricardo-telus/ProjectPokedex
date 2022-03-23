@@ -11,7 +11,8 @@ const Search = () => {
     const [cant, setCant]=useState({ini:1, fin:10})
     const { auth } = useContext(AuthContext); 
     const seeMoves=(e)=>{        
-        setMoves(poke[e.target.value].moves)
+        let info=poke[e.target.value]
+        setMoves(info)
     }
     const obtainPoke=async(e)=>{
         try {
@@ -108,7 +109,7 @@ const getPokes= async ()=>{
                 onClick={getPokes}
                     >More pokemons....</button></center>
             </div>  
-                <Moves data={moves}/>          
+                <Moves poke={moves}/>          
         </div>
     )
 }

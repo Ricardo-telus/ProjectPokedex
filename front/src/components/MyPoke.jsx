@@ -15,7 +15,8 @@ const Poke = () => {
     const [toupdate, setToUpdate] = useState("");
     const { auth } = useContext(AuthContext); 
     const seeMoves=(e)=>{        
-        setMoves(poke[e.target.value].moves)
+        let info=poke[e.target.value]
+        setMoves(info)
     }
     const deletPoke =async (e)=>{
         try {
@@ -177,7 +178,7 @@ const getPokes= async ()=>{
                 onChange={(e)=>setNickname(e.target.value)}
             />
             </PureModal>;
-            <Moves data={moves}/>  
+            <Moves poke={moves}/>  
         </div>
     )
 }
