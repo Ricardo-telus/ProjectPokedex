@@ -167,15 +167,28 @@ const Register = () => {
                         <div className="mb-3 row">
                             <label className="col-sm-2 col-form-label" htmlFor="Trainer">Trainer class:</label>
                             <div className="col-sm-10">
-                                <input
-                                    type="text"
-                                    id="Trainer"
-                                    className='form-control'
-                                    autoComplete="off"
+                                <input 
+                                    className="form-check-input" 
+                                    type="radio" 
+                                    value="Battle"
+                                    name="flexRadio2" 
+                                    checked={trainer === "Battle"}
                                     onChange={(e) => setTrainer(e.target.value)}
-                                    value={trainer}
-                                    required
-                                />
+                                    id="flexRadioDefault4"/>
+                                <label className="form-check-label me-5" htmlFor="flexRadioDefault2">
+                                    Battle
+                                </label>
+                                <input 
+                                    className="form-check-input" 
+                                    type="radio" 
+                                    value="Show"
+                                    name="flexRadio2" 
+                                    checked={trainer === "Show"}
+                                    onChange={(e) => setTrainer(e.target.value)}
+                                    id="flexRadioDefault5"/>
+                                <label className="form-check-label me-5" htmlFor="flexRadioDefault5">
+                                  Show
+                                </label>
                             </div>
                         </div> 
                         <div className="mb-3 row">

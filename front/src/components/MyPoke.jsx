@@ -134,6 +134,16 @@ const getPokes= async ()=>{
                         </div>
                     )
             } 
+            {(ready===true && poke.length===0&&(
+                <>
+                <center>
+                <img 
+                src="https://www.carteltec.com/wp-content/uploads/2021/08/Este-Pokemon-es-el-unico-que-no-tiene-debilidades.jpg" 
+                className="rounded mx-auto d-block w-50 h-75 mt-5" alt="Pokemon"/> 
+                <h1 className="text-light">You don't have pokemons yet</h1>
+                </center>
+                </>
+            ))}
             </div>
             <PureModal
             header="Nickname"

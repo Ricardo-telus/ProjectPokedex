@@ -37,7 +37,7 @@ export const createUser = async (req, res) => {
 //Actualizar un registro
 export const updateUser = async (req, res) => {
     try {
-        await BlogModel.update(req.body, {
+        await UserModel.update(req.body, {
             where: { email: req.params.id}
         })
         res.json({
