@@ -27,26 +27,30 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validMatch===true) {
-            const response = await axios.post(URI, {
-                name:name,
-                tName:nick,
-                region:region,
-                gender:gender,
-                age:age,
-                email:email,
-                trainerClass:trainer,
-                pass:pass
-            })
-            setName('')
-            setAge('1')
-            setNick('')
-            setTrainer('')
-            setRegion('')
-            setEmail((''))
-            setPass("")
-            setPass2("")
-            setAuth({ email, pass, roles:'2001', id:response.data.id});
-            navigate(from, { replace: true });
+            if (name!==""&&nick!==""&&region!==""&&gender!==""&&age!==""&&email!==""&&trainer!==""&&pass!=="") {
+                const response = await axios.post(URI, {
+                    name:name,
+                    tName:nick,
+                    region:region,
+                    gender:gender,
+                    age:age,
+                    email:email,
+                    trainerClass:trainer,
+                    pass:pass
+                })
+                setName('')
+                setAge('1')
+                setNick('')
+                setTrainer('')
+                setRegion('')
+                setEmail((''))
+                setPass("")
+                setPass2("")
+                setAuth({ email, pass, roles:'2001', id:response.data.id});
+                navigate(from, { replace: true });   
+            }else{
+                alert("some field is empty")
+            }           
         } else {
             console.log("don't match the passwords")
         }

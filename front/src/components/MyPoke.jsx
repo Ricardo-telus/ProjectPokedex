@@ -81,7 +81,7 @@ const getPokes= async ()=>{
             {
                 ready?(
                     poke.map((element, index) => {return(                        
-                        <div className="mt-3 col-md-auto" key={index}>
+                        <div className="mt-3 offset-2 offset-sm-4 offset-md-0 col-md-auto" key={index}>
                                 <div className="card" style={{width: "14rem"}}>
                                     <img src={element.sprites.front_default} className="card-img-top" alt={element.name}/>
                                 <div className="card-body">
@@ -118,7 +118,7 @@ const getPokes= async ()=>{
                                         value={save[index].id} 
                                         className="btn btn-sm btn-success w-50" 
                                         onClick={(e) => {setModal(true); setToUpdate([e.target.value, poke[index].id])}}>
-                                    {String(save[index])!=="add name"?(
+                                    {String(save[index].nickname)!=="add name"?(
                                         "Update"
                                     ):(
                                         "Nickname"

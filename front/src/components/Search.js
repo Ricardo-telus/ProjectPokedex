@@ -8,7 +8,7 @@ const Search = () => {
     const [moves, setMoves]=useState([])
     const[getMore, setGetMore]=useState(true)
     const[ready, setReady]=useState(false)
-    const [cant, setCant]=useState({ini:1, fin:10})
+    const [cant, setCant]=useState({ini:1, fin:100})
     const { auth } = useContext(AuthContext); 
     const seeMoves=(e)=>{        
         let info=poke[e.target.value]
@@ -62,7 +62,7 @@ const getPokes= async ()=>{
                 ready&&(                         
                     String(poke)>String("[]")?(
                         poke.map((element, index)=>{return(
-                            <div className="mt-3 col-md-auto" key={element.name}>
+                            <div className="mt-3 offset-2 offset-sm-4 offset-md-0 col-md-auto" key={element.name}>
                                 <div className="card" style={{width: "14rem"}}>
                                     <img src={element.sprites.front_default} className="card-img-top" alt={element.name}/>
                                 <div className="card-body">
