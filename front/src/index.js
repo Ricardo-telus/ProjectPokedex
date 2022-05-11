@@ -9,11 +9,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
     <Provider store={store}>
-      
         <Routes>
           <Route path="/*" element={<App />} />
         </Routes>
-     
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
