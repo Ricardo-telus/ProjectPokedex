@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {doLogin} from '../Reducers/userReducer'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.css'
+import { Tittle } from './Title'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -41,8 +42,9 @@ const Login = () => {
         }        
     },[userReducer])
 
-    return (
+    return (        
         <div className='container-fluid text-center'>
+            <Tittle data="Login"/>
             <div className='row mt-5' id="log">
                 <div className='col-4 offset-2 d-none d-md-block' id="poke">
                 </div>
