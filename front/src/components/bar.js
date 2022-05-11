@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { doLogout } from '../Reducers/userReducer'
+import { doLogout } from '../redux/userReducer'
 import { useDispatch } from 'react-redux';
 import { Tittle } from './Title'
 const Bar = () => {
