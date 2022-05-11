@@ -1,38 +1,46 @@
-import {  useState,useEffect } from 'react';
-import useAuth from '../hooks/useAuth';
+import React, {  useState,useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {doLogin} from '../Reducers/userReducer'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.css'
-import axios from 'axios';
-const URI="http://localhost:8000/poke/"
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const dispatch = useDispatch()
+    const userReducer = useSelector(store => store.user)
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
-    const handleSubmit = async (e) => {
+    const [done, setDone]=useState(false)
+
+    const handleSubmit = async (e) => {        
         e.preventDefault();
         try {
-            const response= await axios.get(URI+user+"/"+pwd)
-            sessionStorage.setItem("poke", JSON.stringify(response.data));
-            setAuth({ user, pwd, roles:'2001', id:response.data.id});
-            navigate(from, { replace: true });
+            dispatch(doLogin(user, pwd))              
         } catch (error) {
             console.log(error)
-        }}
-        useEffect(()=>{
-            let user=JSON.parse(sessionStorage.getItem("poke"))
-                console.log(user)
-                if (user!==null) {            
-                  setAuth({ id:user.id, pwd:user.pass, roles:'2001', user:user.email})
-                  navigate(from, { replace: true });
-                 }else{
-                     return {}
-                 }
+        }
+        setDone(true)
+    }
 
-        },[])
+    useEffect(()=>{
+        let user=JSON.parse(sessionStorage.getItem("poke"))     
+        if (user?.active===true) { 
+            navigate(from, { replace: true });
+            }
+    },[])
+
+    useEffect(()=>{
+        if (userReducer.active===true) {           
+            navigate(from, { replace: true });   
+        } else {
+            if (done) {
+                console.log('Datos incorrectos')   
+            }            
+        }        
+    },[userReducer])
+
     return (
         <div className='container-fluid text-center'>
             <div className='row mt-5' id="log">

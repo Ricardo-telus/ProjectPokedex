@@ -1,16 +1,21 @@
-import { useState} from "react";
+import React, { useState} from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import './styles/user.css'
-import axios from "axios";
+import {updateData} from '../Reducers/userReducer'
+
 const Home = () => {
-    const URI = 'http://localhost:8000/poke/'
-    let data = JSON.parse(sessionStorage.getItem("poke"))
+
+    const dispatch = useDispatch()
+    const userReducer = useSelector(store => store.user)
+    let data = userReducer.array
+    console.log(userReducer)
     const [name, setName] = useState(data.name);
-    const [nick, setNick] = useState(data.tName);
+    const [nick, setNick] = useState(data.nick);
     const [region, setRegion] = useState(data.region);
     const [gender, setGender] = useState(data.gender);
     const [age, setAge] = useState(data.age);
     const [email, setEmail] = useState(data.email);
-    const [trainer, setTrainer] = useState(data.trainerClass);
+    const [trainerClass, setTrainer] = useState(data.trainerClass);
     const [pass, setPass] = useState("");
     const [pass2, setPass2] = useState("");
     const [operation, setOperation]=useState(0)
@@ -18,20 +23,16 @@ const Home = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (pass===pass2) {
-            const response = await axios.put(URI+email, {
-                name:name,
-                tName:nick,
-                region:region,
-                gender:gender,
-                age:age,
-                email:email,
-                trainerClass:trainer,
-                pass:pass
-            })
-            setPass("")
-            setPass2("")
-            setOperation(5)
-            console.log(response)   
+            if (name!==""&&nick!==""&&region!==""&&gender!==""&&age!==""&&email!==""&&trainerClass!==""&&pass!=="") {
+            dispatch(updateData({name,nick,region,gender,age,email,trainerClass,pass}))
+            .then((response=>{
+                setPass("")
+                setPass2("")
+                setOperation(5)
+                console.log(response)
+            })) 
+            .catch(error=>console.log(error))
+            }
         } else {
             setOperation(10)
             console.log("don't match the passwords")
@@ -43,7 +44,7 @@ const Home = () => {
                 <div className="row">
                     <div className="col-10 offset-1 offset-sm-1 col-md-4 mt-5">
                         <h1>Welcome Back!</h1>
-                        <img id="img" src="https://avatarfiles.alphacoders.com/812/thumb-81215.png" className="align-self-center mt-5" alt="user"/>                        
+                        <img id="img" src="http://pm1.narvii.com/6260/48acd84ad5f7b00094abe3c016b3baad5d8e0e22_00.jpg" className="align-self-center mt-5" alt="user"/>                        
                         <h1 className="mt-5">{name}</h1>
                     </div>
                     <div className="col-10 offset-1 offset-sm-1 col-md-4 mt-3">
@@ -151,7 +152,7 @@ const Home = () => {
                                     type="radio" 
                                     value="Battle"
                                     name="flexRadio2" 
-                                    checked={trainer === "Battle"}
+                                    checked={trainerClass === "Battle"}
                                     onChange={(e) => setTrainer(e.target.value)}
                                     id="flexRadioDefault4"/>
                                 <label className="form-check-label me-5" htmlFor="flexRadioDefault2">
@@ -162,7 +163,7 @@ const Home = () => {
                                     type="radio" 
                                     value="Show"
                                     name="flexRadio2" 
-                                    checked={trainer === "Show"}
+                                    checked={trainerClass === "Show"}
                                     onChange={(e) => setTrainer(e.target.value)}
                                     id="flexRadioDefault5"/>
                                 <label className="form-check-label me-5" htmlFor="flexRadioDefault5">

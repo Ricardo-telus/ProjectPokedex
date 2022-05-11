@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { doLogout } from '../Reducers/userReducer'
+import { useDispatch } from 'react-redux';
+
 const Bar = () => {
-    const { setAuth } = useContext(AuthContext);
+    const dispatch = useDispatch()
     const navigate = useNavigate();
-    const logout = async () => {
-        sessionStorage.removeItem("poke");
-        setAuth({});
+    const logout = () => {        
+        dispatch(doLogout())
         navigate('/login');
     }
   return (

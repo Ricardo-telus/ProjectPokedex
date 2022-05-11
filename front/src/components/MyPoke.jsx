@@ -1,10 +1,12 @@
-import { useEffect, useState, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import {getPokemones, deletePokemones} from '../Reducers/pokeReducer'
 import axios from 'axios';
 import PureModal from 'react-pure-modal';
 import 'react-pure-modal/dist/react-pure-modal.min.css';
 import Moves  from './Moves'
 const Poke = () => {    
+    const dispatch = useDispatch()
     const URI = 'http://localhost:8000/poke/mon/'
     const[poke, setPoke]=useState([])
     const[save, setSave]=useState([])
@@ -13,21 +15,21 @@ const Poke = () => {
     const[ready, setReady]=useState(false)
     const [modal, setModal] = useState(false);
     const [toupdate, setToUpdate] = useState("");
-    const { auth } = useContext(AuthContext); 
+    const userData = useSelector(store => store.user)
     const seeMoves=(e)=>{        
         let info=poke[e.target.value]
         setMoves(info)
     }
-    const deletPoke =async (e)=>{
-        try {
-            let resp =await axios.delete(`${URI}${e.target.value}`)
-               if (resp.data.message==="¡Registro eliminado correctamente!") {
-                   alert("deleted succesfully")
-               }
-        } catch (error) {
-            console.log(error)
-            alert("something bad happen")
-        }        
+    const deletPoke = async (e)=>{
+            await dispatch(deletePokemones(e.target.value))
+            .then((response)=>{
+                if (response==="¡Registro eliminado correctamente!") {
+                    alert("deleted succesfully")
+                }
+            }).catch((error)=>{
+                console.log(error)
+                alert("something bad happen")
+            })        
     }
     const updatePoke=async()=>{
         setModal(false)
@@ -35,7 +37,7 @@ const Poke = () => {
             const response = await axios.put(URI + toupdate[0], {
                 id_poke:toupdate[1],
                 nickname:nickname,
-                id_owner:auth.id
+                id_owner:userData.array.id
                 }) 
             if (response.data.message==="¡Registro actualizado correctamente!") {
                 alert("updated succesfully")
@@ -64,10 +66,12 @@ const Poke = () => {
         }                              
     }
 const getPokes= async ()=>{
-        try {            
-            await axios.get(URI+auth.id)
-            .then((response)=>{       
-            paint(response)})
+        try {   
+            await dispatch(getPokemones(userData.array.id))
+            .then((response)=>{
+                paint(response)
+            }).catch((error)=>console.log(error))
+
         } catch (error) {
             console.log(error)
         }       
