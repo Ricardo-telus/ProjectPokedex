@@ -1,19 +1,19 @@
 import React, {  useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {doLogin} from '../Reducers/userReducer'
+import { doLogin } from '../redux/userReducer'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.css'
 import { Tittle } from './Title'
 
 const Login = () => {
     const dispatch = useDispatch()
-    const userReducer = useSelector(store => store.user)
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [done, setDone]=useState(false)
+    const userReducer = useSelector(state => state.user)
 
     const handleSubmit = async (e) => {        
         e.preventDefault();
@@ -28,11 +28,12 @@ const Login = () => {
     useEffect(()=>{
         let user=JSON.parse(sessionStorage.getItem("poke"))     
         if (user?.active===true) { 
-            navigate(from, { replace: true });
+           navigate(from, { replace: true });
             }
     },[])
 
-    useEffect(()=>{
+     useEffect(()=>{
+         console.log(userReducer)
         if (userReducer.active===true) {           
             navigate(from, { replace: true });   
         } else {
@@ -40,7 +41,7 @@ const Login = () => {
                 console.log('Datos incorrectos')   
             }            
         }        
-    },[userReducer])
+    },[userReducer]) 
 
     return (        
         <div className='container-fluid text-center'>
@@ -88,7 +89,7 @@ const Login = () => {
                         </div>                        
                     </form>
             </div>
-            </div>            
+            </div>         
             </div>
 
     )

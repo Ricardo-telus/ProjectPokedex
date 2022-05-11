@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import {updateData} from '../Reducers/userReducer'
+import { useSelector} from 'react-redux';
 import axios from 'axios';
 import Moves  from './Moves'
 const Search = () => {   
-    const dispatch = useDispatch()
     const URI = 'http://localhost:8000/poke/mon'
     const[poke, setPoke]=useState([])
     const [moves, setMoves]=useState([])
     const[getMore, setGetMore]=useState(true)
     const[ready, setReady]=useState(false)
     const [cant, setCant]=useState({ini:1, fin:100})
-    const userData = useSelector(store => store.user)    
+    const userReducer = useSelector(store => store.user)
     const seeMoves=(e)=>{        
         let info=poke[e.target.value]
         setMoves(info)
@@ -21,11 +19,12 @@ const Search = () => {
             const response = await axios.post(URI, {
                 id_poke:e.target.value,
                 nickname:"add name",
-                id_owner:userData.array.id
+                id_owner:userReducer.array.id
                 }) 
             if (String(response.data.message)==="¡Registro creado correctamente!") {
                 alert("Add successfully")
             } else {
+                console.log(response)
                 alert("Something bad happen")
             }
         } catch (error) {

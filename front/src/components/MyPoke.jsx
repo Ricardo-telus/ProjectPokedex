@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import {getPokemones, deletePokemones} from '../Reducers/pokeReducer'
+import {getPokemones, deletePokemones} from '../redux/pokeReducer'
 import axios from 'axios';
 import PureModal from 'react-pure-modal';
 import 'react-pure-modal/dist/react-pure-modal.min.css';
@@ -8,11 +8,11 @@ import Moves  from './Moves'
 const Poke = () => {    
     const dispatch = useDispatch()
     const URI = 'http://localhost:8000/poke/mon/'
-    const[poke, setPoke]=useState([])
-    const[save, setSave]=useState([])
+    const [poke, setPoke]=useState([])
+    const [save, setSave]=useState([])
     const [moves, setMoves]=useState([])
-    const[nickname, setNickname]=useState("")
-    const[ready, setReady]=useState(false)
+    const [nickname, setNickname]=useState("")
+    const [ready, setReady]=useState(false)
     const [modal, setModal] = useState(false);
     const [toupdate, setToUpdate] = useState("");
     const userData = useSelector(store => store.user)

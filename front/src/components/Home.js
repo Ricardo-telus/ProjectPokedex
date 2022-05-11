@@ -1,16 +1,14 @@
 import React, { useState} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import './styles/user.css'
-import {updateData} from '../Reducers/userReducer'
+import {updateData} from '../redux/userReducer'
 
 const Home = () => {
-
     const dispatch = useDispatch()
     const userReducer = useSelector(store => store.user)
     let data = userReducer.array
-    console.log(userReducer)
     const [name, setName] = useState(data.name);
-    const [nick, setNick] = useState(data.nick);
+    const [nick, setNick] = useState(data.tName);
     const [region, setRegion] = useState(data.region);
     const [gender, setGender] = useState(data.gender);
     const [age, setAge] = useState(data.age);
@@ -24,7 +22,7 @@ const Home = () => {
         e.preventDefault();
         if (pass===pass2) {
             if (name!==""&&nick!==""&&region!==""&&gender!==""&&age!==""&&email!==""&&trainerClass!==""&&pass!=="") {
-            dispatch(updateData({name,nick,region,gender,age,email,trainerClass,pass}))
+            dispatch(updateData({name,nick,region,gender,age,email,trainerClass,pass,id:userReducer.array.id}))
             .then((response=>{
                 setPass("")
                 setPass2("")
