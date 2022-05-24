@@ -1,7 +1,7 @@
 import UserModel from "../models/UsersModel.js";
 import PokeModel from "../models/PokeModel.js";
+import jwt from 'jsonwebtoken';
 //** Métodos para el CRUD **/
-
                                                 //Usuarios
 //inicio de session 
 export const getUser = async (req, res) => {
@@ -11,7 +11,12 @@ export const getUser = async (req, res) => {
         })
         if (String(blog[0])!=="undefined") {
             if (String(req.params.pass)===String(blog[0].dataValues.pass)) {
-                res.json(blog[0].dataValues) 
+                jwt.sign({result:blog[0].dataValues.id}, process.env.T_S,{expiresIn:"1d"}, (err, token)=>{
+                    blog[0].dataValues.id='no disponible'
+                    blog[0].dataValues.tok=token
+                res.json(blog[0].dataValues)
+                })
+                             
             } else {
                 res.json( {message: "Password don't match"} )    
             }         
@@ -37,6 +42,7 @@ export const createUser = async (req, res) => {
 //Actualizar un registro
 export const updateUser = async (req, res) => {
     try {
+        req.body.id_owner=req.userId
         await UserModel.update(req.body, {
             where: { email: req.params.id}
         })
@@ -47,13 +53,12 @@ export const updateUser = async (req, res) => {
         res.json( {message: error.message} )
     }
 }
-
                                                     //Poke
 //Obtener pokemones del usuario
 export const getPoke = async (req, res) => {
     try {
         const blog = await PokeModel.findAll({
-            where:{ id_owner:req.params.id }
+            where:{ id_owner:req.userId }            
         })
         res.json(blog)
     } catch (error) {
@@ -63,6 +68,7 @@ export const getPoke = async (req, res) => {
 //add poke to a user
 export const addPoke = async (req, res) => {
     try {
+       req.body.id_owner=req.userId
        await PokeModel.create(req.body)
        res.json({
            "message":"¡Registro creado correctamente!"
@@ -74,6 +80,7 @@ export const addPoke = async (req, res) => {
 //Actualizar un registro
 export const updateNickname = async (req, res) => {
     try {
+        req.body.id_owner=req.userId
         await PokeModel.update(req.body, {
             where: { id: req.params.id}
         })

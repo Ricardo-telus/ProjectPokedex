@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {savePoke} from '../redux/pokeReducer'
 import axios from 'axios';
 import Moves  from './Moves'
 const Search = () => {   
-    const URI = 'http://localhost:8000/poke/mon'
+    const dispatch = useDispatch()
     const[poke, setPoke]=useState([])
     const [moves, setMoves]=useState([])
     const[getMore, setGetMore]=useState(true)
@@ -14,23 +15,8 @@ const Search = () => {
         let info=poke[e.target.value]
         setMoves(info)
     }
-    const obtainPoke=async(e)=>{
-        try {
-            const response = await axios.post(URI, {
-                id_poke:e.target.value,
-                nickname:"add name",
-                id_owner:userReducer.array.id
-                }) 
-            if (String(response.data.message)==="¡Registro creado correctamente!") {
-                alert("Add successfully")
-            } else {
-                console.log(response)
-                alert("Something bad happen")
-            }
-        } catch (error) {
-            console.log(error)
-            alert("Something bad happen")
-        }          
+    const obtainPoke=(e)=>{
+            dispatch(savePoke(e.target.value, userReducer.array.id))
     }
 const getPokes= async ()=>{
     setGetMore(true)

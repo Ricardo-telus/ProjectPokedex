@@ -1,6 +1,5 @@
 //importamos la conexión a la DB
 import db from "../databse/db.js";
-//importamos sequelize
 import { DataTypes } from "sequelize";
 
  const UserModel = db.define('users', {

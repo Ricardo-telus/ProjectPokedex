@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import {getPokemones, deletePokemones} from '../redux/pokeReducer'
+import {getPokemones, deletePokemones, updatePokemones} from '../redux/pokeReducer'
 import axios from 'axios';
 import PureModal from 'react-pure-modal';
 import 'react-pure-modal/dist/react-pure-modal.min.css';
 import Moves  from './Moves'
 const Poke = () => {    
     const dispatch = useDispatch()
-    const URI = 'http://localhost:8000/poke/mon/'
     const [poke, setPoke]=useState([])
     const [save, setSave]=useState([])
     const [moves, setMoves]=useState([])
@@ -20,32 +19,12 @@ const Poke = () => {
         let info=poke[e.target.value]
         setMoves(info)
     }
-    const deletPoke = async (e)=>{
-            await dispatch(deletePokemones(e.target.value))
-            .then((response)=>{
-                if (response==="¡Registro eliminado correctamente!") {
-                    alert("deleted succesfully")
-                }
-            }).catch((error)=>{
-                console.log(error)
-                alert("something bad happen")
-            })        
+    const deletPoke = (e)=>{
+        dispatch(deletePokemones(e.target.value))    
     }
-    const updatePoke=async()=>{
+    const updatePoke=()=>{
         setModal(false)
-         try {
-            const response = await axios.put(URI + toupdate[0], {
-                id_poke:toupdate[1],
-                nickname:nickname,
-                id_owner:userData.array.id
-                }) 
-            if (response.data.message==="¡Registro actualizado correctamente!") {
-                alert("updated succesfully")
-            }
-            console.log(response)   
-        } catch (error) {
-            console.log(error)
-        }    
+        dispatch(updatePokemones(toupdate,nickname,userData.array.id))
         setToUpdate("")    
         setNickname("")
     }
