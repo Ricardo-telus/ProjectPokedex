@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from "axios"
-const URI="http://localhost:8000/poke/"
+const URI=`${process.env.REACT_APP_URLBACK}/poke/`
+const token=JSON.parse(sessionStorage.getItem('poke'))?.array.tok
 const existentes = JSON.parse(sessionStorage.getItem("poke"))
 
 export const userSlice = createSlice({
@@ -43,6 +44,7 @@ export const doLogin = (user, pwd) => async (dispatch, getState) => {
             dispatch(signUpError(res.data))
         }else{
           dispatch(signUp(res.data))
+          console.log(res)
           sessionStorage.setItem("poke", JSON.stringify({array:res.data, active:true}));
         }        
     } catch (error) {
@@ -60,14 +62,17 @@ export const doLogin = (user, pwd) => async (dispatch, getState) => {
             age:data.age,
             email:data.email,
             tName:data.nick,
-            pass:data.pass,
-            id:data.id
-        })       
-        console.log(response)
+            pass:data.pass
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`
+            } 
+      })       
         if (response.data.message==="¡Registro actualizado correctamente!") {
           sessionStorage.setItem("poke", JSON.stringify({array:data, active:true}));
-        }else{
-          console.log('vino con error')        
+          alert('Data updated succesfully')
+        }else{     
+          alert('Something bad happen with the request')
         }
         dispatch(userUpdate(data))
         return response

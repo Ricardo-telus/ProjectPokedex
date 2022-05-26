@@ -5,10 +5,12 @@ import {updateData} from '../redux/userReducer'
 
 const Home = () => {
     const dispatch = useDispatch()
+    const forNombre=/^([A-Z][a-zá-ÿ]+([ ]?[A-Z][a-zá-ÿ]+)*)$/;
+    const forEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const userReducer = useSelector(store => store.user)
     let data = userReducer.array
     const [name, setName] = useState(data.name);
-    const [nick, setNick] = useState(data.tName);
+    const [nick, setNick] = useState(data.tName?(data.tName):(data.nick));
     const [region, setRegion] = useState(data.region);
     const [gender, setGender] = useState(data.gender);
     const [age, setAge] = useState(data.age);
@@ -18,10 +20,19 @@ const Home = () => {
     const [pass2, setPass2] = useState("");
     const [operation, setOperation]=useState(0)
     //process to update
+    const validarCampos=(expresion, data)=>{
+        if (!expresion.test(data)){
+            alert('Some inputs have not valid data: '+data)
+            }
+      }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (pass===pass2) {
             if (name!==""&&nick!==""&&region!==""&&gender!==""&&age!==""&&email!==""&&trainerClass!==""&&pass!=="") {
+                validarCampos(forNombre, nick)                
+                validarCampos(forNombre, region)                
+                validarCampos(forNombre, name) 
+                validarCampos(forEmail,email)
             dispatch(updateData({name,nick,region,gender,age,email,trainerClass,pass,id:userReducer.array.id}))
             .then((response=>{
                 setPass("")

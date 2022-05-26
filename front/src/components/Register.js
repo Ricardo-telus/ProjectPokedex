@@ -4,6 +4,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Register = () => {
+    const forNombre=/^([A-Z][a-zá-ÿ]+([ ]?[A-Z][a-zá-ÿ]+)*)$/;
+    const forEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const URI = 'http://localhost:8000/poke/'
     const { setAuth } = useAuth();
     const navigate = useNavigate();
@@ -23,31 +25,44 @@ const Register = () => {
     useEffect(() => {
         setValidMatch(pass === pass2);
     }, [pass, pass2])
-
+    const validarCampos=(expresion, data)=>{
+        if (!expresion.test(data)){
+            alert('Some inputs have not valid data: '+data)
+            throw new Error('some input is not valid');
+            }
+      }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validMatch===true) {
             if (name!==""&&nick!==""&&region!==""&&gender!==""&&age!==""&&email!==""&&trainer!==""&&pass!=="") {
-                const response = await axios.post(URI, {
-                    name:name,
-                    tName:nick,
-                    region:region,
-                    gender:gender,
-                    age:age,
-                    email:email,
-                    trainerClass:trainer,
-                    pass:pass
-                })
-                setName('')
-                setAge('1')
-                setNick('')
-                setTrainer('')
-                setRegion('')
-                setEmail((''))
-                setPass("")
-                setPass2("")
-                setAuth({ email, pass, roles:'2001', id:response.data.id});
-                navigate(from, { replace: true });   
+                try {
+                    validarCampos(forNombre, nick)                
+                    validarCampos(forNombre, region)                
+                    validarCampos(forNombre, name) 
+                    validarCampos(forEmail,email)
+                    const response = await axios.post(URI, {
+                        name:name,
+                        tName:nick,
+                        region:region,
+                        gender:gender,
+                        age:age,
+                        email:email,
+                        trainerClass:trainer,
+                        pass:pass
+                    })
+                    console.log(response)
+                    setName('')
+                    setAge('1')
+                    setNick('')
+                    setTrainer('')
+                    setRegion('')
+                    setEmail((''))
+                    setPass("")
+                    setPass2("")
+                    setAuth({ email, pass, roles:'2001', id:response.data.id});
+                    navigate(from, { replace: true }); 
+                    } catch (error) {
+                    }                  
             }else{
                 alert("some field is empty")
             }           
@@ -97,12 +112,6 @@ const Register = () => {
                             </div>
                         </div>   
                         <div className="mb-3 row">
-                        {/* <select className="form-select" aria-label="Default select example">
-                                <option defaultValue="s">Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select> */}
                             <label className="col-sm-2 col-form-label" htmlFor="Region">Region:</label>
                             <div className="col-sm-10">                        
                                 <input

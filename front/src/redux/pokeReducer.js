@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from "axios"
-const URI="http://localhost:8000/poke/mon/"
+const token=JSON.parse(sessionStorage.getItem('poke'))?.array.tok
+const URI=`${process.env.REACT_APP_URLBACK}/poke/mon`
 
 export const userSlice = createSlice({
   name: 'poke',
@@ -20,20 +21,27 @@ export const { getPoke } = userSlice.actions
 export default userSlice.reducer
 
 // actions
-export const getPokemones = (user) => async (dispatch, getState) => {
+export const getPokemones = () => async (dispatch, getState) => {
     try {        
-        const response= await axios.get(URI+user)          
+        const response= await axios.get(URI+'g',{
+            headers: {
+                'Authorization': `Bearer ${token}`
+              } 
+        })          
             return response   
     } catch (error) {
         console.log(error)
     } 
 }
-export const updatePokemones = (toupdate,nickname,id) => async (dispatch, getState) => {
+export const updatePokemones = (toupdate,nickname) => async (dispatch, getState) => {
     try {
-        const response = await axios.put(URI + toupdate[0], {
+        const response = await axios.put(URI + "/" + toupdate[0], {
             id_poke:toupdate[1],
-            nickname:nickname,
-            id_owner:id
+            nickname:nickname
+            },{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                  } 
             }) 
         if (response.data.message==="¡Registro actualizado correctamente!") {
             alert("updated succesfully")
@@ -45,12 +53,15 @@ export const updatePokemones = (toupdate,nickname,id) => async (dispatch, getSta
         console.log(error)
     }        
 }
-export const savePoke = (id_poke,id_user) => async (dispatch, getState) => {
+export const savePoke = (id_poke) => async (dispatch, getState) => {
     try {
         const response = await axios.post(URI, {
             id_poke:id_poke,
-            nickname:"add name",
-            id_owner:id_user
+            nickname:"add name"
+            },{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                  } 
             }) 
         if (response.data.message==="¡Registro creado correctamente!") {
             alert("Obtain succesfully")
@@ -65,8 +76,12 @@ export const savePoke = (id_poke,id_user) => async (dispatch, getState) => {
 }
 export const deletePokemones = (poke) => async (dispatch, getState) => {
     try {        
-        const response= await axios.delete(`${URI}${poke}`)
-        if (response==="¡Registro eliminado correctamente!") {
+        const response= await axios.delete(`${URI}/${poke}`,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+              } 
+        })
+        if (response.data.message==="¡Registro eliminado correctamente!") {
             alert("deleted succesfully")
         }
     } catch (error) {
