@@ -104,3 +104,12 @@ export const deletePoke = async (req, res) => {
         res.json( {message: error.message} )
     }
 }
+export const getinfo = async (req, res) => {
+    try {
+        res.json({
+            "message":"version 1 y funcionando"
+        })
+    } catch (error) {
+        res.json( {message: error.message} )
+    }
+}

@@ -1,10 +1,11 @@
 import express from 'express'
-import { updateUser, getPoke, updateNickname, deletePoke, addPoke, getUser,createUser } from '../controllers/BlogController.js'
+import { updateUser, getPoke, updateNickname, deletePoke, addPoke, getUser,createUser, getinfo } from '../controllers/BlogController.js'
 import jwt from 'jsonwebtoken';
 import 'dotenv/config'
 const { sign, verify } = jwt;
 const router = express.Router()
 
+router.get('/version', getinfo)
 //Pokes
 router.put('/mon/:id',verifyToken, updateNickname)
 router.delete('/mon/:id',verifyToken, deletePoke)
@@ -14,6 +15,7 @@ router.post('/mon', verifyToken, addPoke)
 router.get('/:email/:pass', getUser)
 router.post('/', createUser)
 router.put('/:id', verifyToken, updateUser)
+
 
 function verifyToken(req, res, next){
     const authHeader = req.headers['authorization']

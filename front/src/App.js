@@ -44,3 +44,4 @@ function RequireAuth() {
 
   return <Outlet />;
 }
+//docker build --platform linux/amd64 -t umgtato/front-pokedex:v3 .
