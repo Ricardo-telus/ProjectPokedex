@@ -107,7 +107,7 @@ export const deletePoke = async (req, res) => {
 export const getinfo = async (req, res) => {
     try {
         res.json({
-            "message":"version 1 y funcionando"
+            "message":`version 1 y funcionando en ${process.env.BD}!`
         })
     } catch (error) {
         res.json( {message: error.message} )

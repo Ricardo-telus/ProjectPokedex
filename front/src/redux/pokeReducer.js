@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from "axios"
 const token=JSON.parse(sessionStorage.getItem('poke'))?.array.tok
 const URI=`${process.env.REACT_APP_URLBACK}/poke/mon`
-
+console.log(URI)
 export const userSlice = createSlice({
   name: 'poke',
   initialState:{

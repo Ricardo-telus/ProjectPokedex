@@ -1,5 +1,5 @@
 FROM node:16.3.0-alpine
-
+ARG BD=localhost
 WORKDIR /usr/src/app
 
 COPY . . 

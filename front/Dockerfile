@@ -1,4 +1,5 @@
 FROM node:17-alpine3.14
+ARG REACT_APP_URLBACK=localhost
 WORKDIR /app
 
 COPY ./package.json .
