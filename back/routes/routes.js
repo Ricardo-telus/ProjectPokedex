@@ -12,7 +12,7 @@ router.delete('/mon/:id',verifyToken, deletePoke)
 router.get('/mong/',verifyToken, getPoke)
 router.post('/mon', verifyToken, addPoke)
 //Users
-router.get('/:email/:pass', getUser)
+router.post('/login', getUser)
 router.post('/', createUser)
 router.put('/:id', verifyToken, updateUser)
 

@@ -7,10 +7,10 @@ import jwt from 'jsonwebtoken';
 export const getUser = async (req, res) => {
     try {
         const blog = await UserModel.findAll({
-            where:{ email:req.params.email }
+            where:{ email:req.body.user }
         })
         if (String(blog[0])!=="undefined") {
-            if (String(req.params.pass)===String(blog[0].dataValues.pass)) {
+            if (String(req.body.pwd)===String(blog[0].dataValues.pass)) {
                 jwt.sign({result:blog[0].dataValues.id}, process.env.T_S,{expiresIn:"1d"}, (err, token)=>{
                     blog[0].dataValues.id='no disponible'
                     blog[0].dataValues.tok=token

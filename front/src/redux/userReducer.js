@@ -39,7 +39,7 @@ export default userSlice.reducer
 
 export const doLogin = (user, pwd) => async (dispatch, getState) => {
     try {    
-        const res = await axios.get(URI+user+"/"+pwd)
+        const res = await axios.post(URI+"login",{user,pwd})
         if (res.data?.message) {
             dispatch(signUpError(res.data))
         }else{
