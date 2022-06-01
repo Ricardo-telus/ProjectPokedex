@@ -6,7 +6,7 @@ import useAuth from '../hooks/useAuth';
 const Register = () => {
     const forNombre=/^([A-Z][a-zá-ÿ]+([ ]?[A-Z][a-zá-ÿ]+)*)$/;
     const forEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const URI = 'http://localhost:8000/poke/'
+    const URI = `http://${process.env.REACT_APP_URLBACK}:8000/poke/`
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
