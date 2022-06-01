@@ -1,7 +1,7 @@
 import {Sequelize} from 'sequelize'
 
 const db = new Sequelize('poke', 'ric', 'ric',{
-    host: '192.168.1.3',
+    host: process.env.BD,
     dialect: 'mysql'
 })
 
