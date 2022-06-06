@@ -25,6 +25,6 @@ try {
 } catch (error) {
     console.log(`El error de conexión es: ${error}`)
 }
-app.listen(8000, ()=>{
-    console.log(`Server UP running in port 8000 on ip:${process.env.BD}`)
+app.listen(443, ()=>{
+    console.log(`Server UP running in ip:${process.env.BD}`)
 })

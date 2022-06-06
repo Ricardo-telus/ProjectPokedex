@@ -1,6 +1,6 @@
 import {Sequelize} from 'sequelize'
 
-const db = new Sequelize('poke', 'ric', 'ric',{
+const db = new Sequelize('Poke', 'ric', 'ric',{
     host: process.env.BD,
     dialect: 'mysql'
 })
