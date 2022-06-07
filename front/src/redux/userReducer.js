@@ -42,6 +42,7 @@ export const doLogin = (user, pwd) => async (dispatch, getState) => {
         const res = await axios.post(URI+"login",{user,pwd})
         if (res.data?.message) {
             dispatch(signUpError(res.data))
+            alert(res.data.message)
         }else{
           dispatch(signUp(res.data))
           console.log(res)

@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
 
 const Register = () => {
     const forNombre=/^([A-Z][a-zá-ÿ]+([ ]?[A-Z][a-zá-ÿ]+)*)$/;
     const forEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const URI = `http://${process.env.REACT_APP_URLBACK}/poke/`
-    const { setAuth } = useAuth();
+    const URI = `${process.env.REACT_APP_URLBACK}/poke/`
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -51,6 +49,7 @@ const Register = () => {
                         pass:pass
                     })
                     console.log(response)
+                    alert('User created succesfully, please do login')
                     setName('')
                     setAge('1')
                     setNick('')
@@ -59,9 +58,10 @@ const Register = () => {
                     setEmail((''))
                     setPass("")
                     setPass2("")
-                    setAuth({ email, pass, roles:'2001', id:response.data.id});
                     navigate(from, { replace: true }); 
                     } catch (error) {
+                        console.log(error)
+                        alert('Something bad happen')
                     }                  
             }else{
                 alert("some field is empty")

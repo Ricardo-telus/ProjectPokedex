@@ -20,11 +20,11 @@ const Poke = () => {
         setMoves(info)
     }
     const deletPoke = (e)=>{
-        dispatch(deletePokemones(e.target.value))    
+        dispatch(deletePokemones(e.target.value,userData.array.tok))    
     }
     const updatePoke=()=>{
         setModal(false)
-        dispatch(updatePokemones(toupdate,nickname,userData.array.id))
+        dispatch(updatePokemones(toupdate,nickname,userData.array.tok))
         setToUpdate("")    
         setNickname("")
     }
@@ -46,7 +46,7 @@ const Poke = () => {
     }
 const getPokes= async ()=>{
         try {   
-            await dispatch(getPokemones(userData.array.id))
+            await dispatch(getPokemones(userData.array.tok))
             .then((response)=>{
                 paint(response)
             }).catch((error)=>console.log(error))

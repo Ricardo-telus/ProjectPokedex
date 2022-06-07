@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from "axios"
-const token=JSON.parse(sessionStorage.getItem('poke'))?.array.tok
 const URI=`${process.env.REACT_APP_URLBACK}/poke/mon`
-console.log(URI)
 export const userSlice = createSlice({
   name: 'poke',
   initialState:{
@@ -21,8 +19,9 @@ export const { getPoke } = userSlice.actions
 export default userSlice.reducer
 
 // actions
-export const getPokemones = () => async (dispatch, getState) => {
+export const getPokemones = (token) => async (dispatch, getState) => {
     try {        
+        console.log(token)
         const response= await axios.get(URI+'g',{
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -33,7 +32,7 @@ export const getPokemones = () => async (dispatch, getState) => {
         console.log(error)
     } 
 }
-export const updatePokemones = (toupdate,nickname) => async (dispatch, getState) => {
+export const updatePokemones = (toupdate,nickname,token) => async (dispatch, getState) => {
     try {
         const response = await axios.put(URI + "/" + toupdate[0], {
             id_poke:toupdate[1],
@@ -53,7 +52,7 @@ export const updatePokemones = (toupdate,nickname) => async (dispatch, getState)
         console.log(error)
     }        
 }
-export const savePoke = (id_poke) => async (dispatch, getState) => {
+export const savePoke = (id_poke, token) => async (dispatch, getState) => {
     try {
         const response = await axios.post(URI, {
             id_poke:id_poke,
@@ -74,7 +73,7 @@ export const savePoke = (id_poke) => async (dispatch, getState) => {
         console.log(error)
     }        
 }
-export const deletePokemones = (poke) => async (dispatch, getState) => {
+export const deletePokemones = (poke, token) => async (dispatch, getState) => {
     try {        
         const response= await axios.delete(`${URI}/${poke}`,{
             headers: {
