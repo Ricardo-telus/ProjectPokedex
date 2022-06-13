@@ -53,7 +53,7 @@ const Home = () => {
                 <div className="row">
                     <div className="col-10 offset-1 offset-sm-1 col-md-4 mt-5">
                         <h1>Welcome Back!</h1>
-                        <img id="img" src="http://pm1.narvii.com/6260/48acd84ad5f7b00094abe3c016b3baad5d8e0e22_00.jpg" className="align-self-center mt-5" alt="user"/>                        
+                        <img id="img" src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2021/04/ataque-seguridad-ciberdelincuente-2307431.jpg?itok=qICg7umk" className="align-self-center mt-5" alt="user"/>                        
                         <h1 className="mt-5">{name}</h1>
                     </div>
                     <div className="col-10 offset-1 offset-sm-1 col-md-4 mt-3">
